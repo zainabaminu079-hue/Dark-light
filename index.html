@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project - 3 Dark/Light Toggle</title>
+<style>
+:root{
+ --bg:#f5f3ff;
+ --card:#ffffff;
+ --text:#2d2a6b;
+ --sub:#6b6a8a;
+ --border:#e0dcff;
+ --toggle-bg:#e0dcff;
+}
+body.dark{
+ --bg:#1a1930;
+ --card:#25244a;
+ --text:#ffffff;
+ --sub:#b8b5d6;
+ --border:#3a3870;
+ --toggle-bg:#3a3870;
+}
+* {margin:0;padding:0;box-sizing:border-box;transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;}
+body{
+ background:var(--bg);
+ color:var(--text);
+ font-family:'Segoe UI',sans-serif;
+ min-height:100vh;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+}
+.container{
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:20px;
+ padding:40px 30px;
+ width:100%;
+ max-width:450px;
+ box-shadow:0 10px 30px rgba(0,0,0,0.1);
+ text-align:center;
+}
+h1{font-size:28px;margin-bottom:5px;}
+h2{font-size:20px;text-decoration:underline;margin-bottom:30px;}
+p{color:var(--sub);margin:20px 0;line-height:1.6;}
+
+/* Toggle Switch Design */
+.toggle-wrapper{display:flex;align-items:center;justify-content:center;gap:15px;margin:25px 0;}
+.icon{font-size:22px;}
+.switch{
+ position:relative;
+ width:70px;height:36px;
+ background:var(--toggle-bg);
+ border-radius:30px;
+ cursor:pointer;
+ border:2px solid var(--border);
+ display:flex;
+ align-items:center;
+ padding:3px;
+}
+.knob{
+ width:28px;height:28px;
+ background:white;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:16px;
+ transform:translateX(0);
+ transition: transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55);
+ box-shadow:0 2px 5px rgba(0,0,0,0.2);
+}
+body.dark .knob{transform:translateX(34px); background:#ffde59;}
+.demo-cards{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;}
+.demo-card{background:var(--bg);border:1px solid var(--border);padding:15px;border-radius:12px;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Project - 3</h1>
+  <h2>Dark / Light Mode Toggle</h2>
+
+  <div class="toggle-wrapper">
+    <span class="icon">☀️</span>
+    <div class="switch" id="toggle">
+      <div class="knob" id="knob">🌙</div>
+    </div>
+    <span class="icon">🌙</span>
+  </div>
+
+  <p>This page changes colors dynamically using JavaScript. Your preference is saved in localStorage with smooth transition effect.</p>
+
+  <div class="demo-cards">
+    <div class="demo-card">✨ Creative UI</div>
+    <div class="demo-card">💾 localStorage</div>
+  </div>
+</div>
+
+<script>
+const toggle = document.getElementById('toggle');
+const knob = document.getElementById('knob');
+const body = document.body;
+
+// Load saved preference
+const savedMode = localStorage.getItem('theme');
+if(savedMode === 'dark'){
+  body.classList.add('dark');
+  knob.textContent = '☀️';
+}
+
+function toggleTheme(){
+  body.classList.toggle('dark');
+  const isDark = body.classList.contains('dark');
+  
+  // Change icon dynamically
+  knob.textContent = isDark ? '☀️' : '🌙';
+  
+  // Save preference in localStorage
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+
+toggle.addEventListener('click', toggleTheme);
+</script>
+
+</body>
+</html>
